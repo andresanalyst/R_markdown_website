@@ -1,0 +1,90 @@
+---
+title: "R Project"
+author: "Andres Andrade"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  word_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+library(tools)
+library(readxl)
+library(stringi)
+library(dygraphs)
+```
+
+## Function to read file
+
+```{r}
+read_lib <- function(file){
+  file1 = stri_sub(file, -3)
+  print(file1)
+  if(file1 == 'csv'){
+  df <- read_csv(paste(file))
+  df <- as.data.frame(df)
+  return(df)}else{
+  df1 <- read_excel(paste(file))
+  df1 <- as.data.frame(df1)
+  return(df1)}
+}
+
+hurricanes <- read_lib("C:/Users/andre/Documents/One Drive Storage/OneDrive/School/SCHOOL/Summer 2022/R/Final Project/hurricanes(1).csv")
+
+```
+## Examining Data
+```{r}
+
+hurricanes$wind[hurricanes$wind > 80]
+which(hurricanes$wind < 80)
+
+```
+## Cleaning Data
+```{r}
+
+is.null(hurricanes)
+which(is.na(hurricanes))
+
+head(hurricanes,5)
+hurricanes[hurricanes == '-----'] <- NA
+
+which(is.na(hurricanes$pressure))
+
+```
+## Box plot and histogram
+```{r}
+
+hurricanes$wind <- as.integer(hurricanes$wind)
+hurricanes$pressure <- as.integer(hurricanes$pressure)
+
+boxplot(hurricanes$pressure, horizontal = T, 
+        main = 'Hurricane Air Pressure',
+        xlab = "Pressure (Bar)")
+boxplot.stats(hurricanes$pressure)
+
+hist(hurricanes$pressure,main = 'Hurricane Air Pressure',
+        xlab = "Pressure (Bar)")
+
+```
+
+## Time series plot of hurricates
+
+```{r}
+
+x <- hurricanes$year
+y <- hurricanes$wind
+n <- head(hurricanes$year,1)
+m <- tail(hurricanes$year,1)
+b  <- "Wind(mph)"
+plot(x,y, main = "Hurricanes (Year vs Wind)",
+          xlab = sprintf("Year (%s - %1.0f)",n,m),
+          ylab = b)
+
+```
+
