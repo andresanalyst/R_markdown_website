@@ -22,7 +22,7 @@ library(dygraphs)
 
 ## Function to read file
 
-```{r}
+```{r, results='hide', message=FALSE}
 read_lib <- function(file){
   file1 = stri_sub(file, -3)
   print(file1)
