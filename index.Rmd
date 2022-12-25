@@ -35,7 +35,7 @@ read_lib <- function(file){
   return(df1)}
 }
 
-hurricanes <- read_lib("C:/Users/andre/Documents/One Drive Storage/OneDrive/School/SCHOOL/Summer 2022/R/Final Project/hurricanes(1).csv")
+hurricanes <- read_lib("hurricanes.csv")
 
 ```
 ## Examining Data
